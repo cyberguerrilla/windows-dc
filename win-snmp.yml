@@ -1,0 +1,36 @@
+---
+- hosts: localhost
+  tasks:
+
+  - name: set ansible manager IP
+    set_fact:
+      snmp_mgr: "{{ ansible_default_ipv4.address }}"
+    delegate_to: localhost
+
+  - name: "Copy fact to other servers"
+    set_fact:
+      snmp_mgr: "{{ snmp_mgr }}"
+    delegate_to: "{{ item }}"
+    delegate_facts: True
+    with_items: "{{ groups['all'] }}"
+    when: item != "localhost"
+
+- hosts: all
+  tasks:
+
+  - name: Install SNMP Service
+    win_feature:
+      name: SNMP-Service
+      state: present
+   
+  - debug:
+      msg: SNMP manager IP is "{{ snmp_mgr }}"
+
+# This doesn't seem to be working, but all above does
+  - name: Add SNMP communities and managers
+    win_snmp:
+      communities:
+      - public
+      managers:
+      - "{{ snmp_mgr }}"
+      action: add
