@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Copy scripts directory
+    win_copy:
+      src: ./scripts
+      dest: 'C:\temp\'
+      remote_src: no

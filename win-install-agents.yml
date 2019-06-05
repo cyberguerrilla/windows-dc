@@ -1,0 +1,22 @@
+---
+- hosts: all
+  gather_facts: no
+- name: Install winlogbeat
+  import_playbook: install-winlogbeat.yml
+- name: Install filebeat
+  import_playbook: install-filebeat.yml
+- name: Install packetbeat
+  import_playbook: install-packetbeat.yml
+#- name: Install auditbeat
+#  import_playbook: install-auditbeat.yml
+- name: Install nxlog
+  import_playbook: install-nxlog.yml
+- name: Install osquery
+  import_playbook: install-osquery.yml
+- name: Install splunk
+  import_playbook: install-splunk.yml
+
+
+
+
+

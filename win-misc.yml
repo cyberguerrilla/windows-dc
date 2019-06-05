@@ -1,0 +1,26 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:  
+  - name: Set timezone to central
+    win_timezone:
+      timezone: Central Standard Time
+
+  - name: Disable windows firewall
+    win_firewall:
+      state: disabled
+      profiles:
+      - Domain
+      - Private
+      - Public
+    tags: disable_firewall
+  
+  - name: Create desktop icons
+    win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/create-desktop-icons.ps1
+  
+  - name: Set logstash dns entry
+    win_dns_record:
+      name: "logstash"
+      type: "A"
+      value: "172.16.58.211"
+      zone: "windomain.local"

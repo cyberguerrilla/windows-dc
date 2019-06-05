@@ -1,0 +1,29 @@
+---
+- import_playbook: copy-scripts.yml
+  gather_facts: no
+- hosts: all
+  tasks:
+  - name: Run enable rdp
+    win_command: cmd /c c:/temp/scripts/enable-rdp.bat
+  - name: Debloat Windows
+    win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/debloat-windows.ps1
+  - name: Pin PowerShell
+    win_command: cmd /c c:/temp/scripts/pin-powershell.bat
+  - name: Set winrm automatic
+    win_command: cmd /c c:/temp/scripts/set-winrm-automatic.bat
+  - name: Enable UAC
+    win_command: cmd /c c:/temp/scripts/uac-enable.bat
+  - name: Install sysmon
+    win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/install-sysinternals.ps1
+  - name: Configure PowerShell Logging
+    win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/configure-powershelllogging.ps1
+  - name: Configure Auditing Policy GPOs
+    win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/configure-AuditingPolicyGPOs.ps1
+  - name: Download palantir
+    win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/download_palantir_wef.ps1
+  - name: Install autoruns to wineventlog
+    win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/install-autorunstowineventlog.ps1
+  - name: Enabled DNS debug log
+    win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/configure-DNSdebuglogging.ps1
+  - name: Windows reboot
+    win_reboot:

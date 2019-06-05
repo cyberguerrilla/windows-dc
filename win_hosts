@@ -1,0 +1,9 @@
+[win]
+172.16.58.209
+
+[win:vars]
+ansible_port=5985
+ansible_user=admin
+ansible_password=admin
+ansible_connection=winrm
+ansible_winrm_transport=basic

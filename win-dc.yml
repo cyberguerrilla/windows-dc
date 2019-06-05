@@ -1,0 +1,8 @@
+---
+- import_playbook: copy-scripts.yml
+- hosts: all
+  tasks:
+  - name: Run create-domain.ps1
+    win_command: powershell.exe -ExecutionPolicy ByPass -File C:/temp/scripts/create-domain.ps1 172.16.58.187
+  - name: Windows reboot
+    win_reboot:

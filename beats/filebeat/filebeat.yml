@@ -1,0 +1,8 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - c:\pslogs\*\*.txt
+  fields: {log_type: powershell-logs}
+
+output.logstash:
+  hosts: ["logstash:5045"]
