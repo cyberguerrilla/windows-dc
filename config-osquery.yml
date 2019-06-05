@@ -1,0 +1,14 @@
+---
+- hosts: 127.0.0.1
+  connection: local 
+  gather_facts: no
+  become: yes
+  tasks:
+
+  - name: Get Fleet enroll-secret and write to file
+    shell: "echo {{item}} > ./osquery/osquery.key"
+    with_lines: "sudo docker exec -i fleet /bin/sh -c 'fleetctl login --email guerillaBT@bsides.lab --password bsid3s\\! && fleetctl get enroll-secret' | awk 'NR==2'"
+
+  - name: Get Fleet cert and write to file
+    shell: "echo {{item}} >> ./osquery/cert.crt"
+    with_lines: "cat /opt/kolide/fleet/certs/server.cert"
