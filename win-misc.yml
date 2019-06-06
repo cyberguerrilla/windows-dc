@@ -1,7 +1,23 @@
 ---
+- hosts: localhost
+  tasks:
+
+  - name: set localhost IP
+    set_fact:
+      lh_ip: "{{ ansible_default_ipv4.address }}"
+    delegate_to: localhost
+
+  - name: "Copy fact to other servers"
+    set_fact:
+      lh_ip: "{{ lh_ip }}"
+    delegate_to: "{{ item }}"
+    delegate_facts: True
+    with_items: "{{ groups['all'] }}"
+    when: item != "localhost"
+
 - hosts: all
-  gather_facts: no
   tasks:  
+
   - name: Set timezone to central
     win_timezone:
       timezone: Central Standard Time
@@ -22,5 +38,12 @@
     win_dns_record:
       name: "logstash"
       type: "A"
-      value: "172.16.58.211"
+      value: "{{ lh_ip }}"
+      zone: "windomain.local"
+
+  - name: Set Fleet dns entry
+    win_dns_record:
+      name: "fleet"
+      type: "A"
+      value: "{{ lh_ip }}"
       zone: "windomain.local"
