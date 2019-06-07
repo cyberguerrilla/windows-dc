@@ -41,6 +41,13 @@
       value: "{{ lh_ip }}"
       zone: "windomain.local"
 
+  - name: Set elasticsearch dns entry
+    win_dns_record:
+      name: "elasticsearch"
+      type: "A"
+      value: "{{ lh_ip }}"
+      zone: "windomain.local"
+
   - name: Set Fleet dns entry
     win_dns_record:
       name: "fleet"

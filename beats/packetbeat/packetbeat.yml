@@ -23,3 +23,7 @@ packetbeat.procs.enabled: true
 output.logstash:
   hosts: ["logstash:5046"]
 
+xpack.monitoring:
+  enabled: true
+  elasticsearch:
+    hosts: ["http://elasticsearch:9200"]

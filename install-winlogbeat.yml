@@ -2,7 +2,7 @@
 - hosts: all
   gather_facts: no
   tasks:
- - name: Install winlogbeat
+  - name: Install winlogbeat
     win_chocolatey:
       name: winlogbeat
       state: present

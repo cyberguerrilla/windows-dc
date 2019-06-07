@@ -2,7 +2,7 @@
 - hosts: all
   gather_facts: no
   tasks:
- - name: Install filebeat
+  - name: Install filebeat
     win_chocolatey:
       name: filebeat
       state: present
