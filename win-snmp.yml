@@ -26,11 +26,16 @@
   - debug:
       msg: SNMP manager IP is "{{ snmp_mgr }}"
 
-# This doesn't seem to be working, but all above does
-  - name: Add SNMP communities and managers
-    win_snmp:
-      communities:
-      - public
-      managers:
-      - "{{ snmp_mgr }}"
-      action: add
+  - name: Add/update permitted managers with localhost IP
+    win_regedit:
+      path: HKLM:\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\PermittedManagers
+      name: 1
+      data: "{{ snmp_mgr }}"
+      type: string
+
+  - name: Add/update read-only community string
+    win_regedit:
+      path: HKLM:\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\ValidCommunities
+      name: public
+      data: 4
+      type: dword
