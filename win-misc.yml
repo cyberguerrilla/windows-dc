@@ -15,6 +15,8 @@
     with_items: "{{ groups['all'] }}"
     when: item != "localhost"
 
+- import_playbook: copy-scripts.yml
+
 - hosts: all
   tasks:  
 
@@ -33,7 +35,13 @@
   
   - name: Create desktop icons
     win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/create-desktop-icons.ps1
-  
+
+  - name: Start bginfo after login
+    win_regedit:
+      path: 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
+      name: bginfo
+      data: 'C:\ProgramData\chocolatey\bin\bginfo.exe C:\temp\scripts\bginfo.bgi /silent /timer:0 /nolicprompt'
+
   - name: Set logstash dns entry
     win_dns_record:
       name: "logstash"

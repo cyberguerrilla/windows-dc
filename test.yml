@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+    - script: ./get-win-ip.sh
+      register: win_ip
+
+    - debug:
+        var: win_ip.stdout
