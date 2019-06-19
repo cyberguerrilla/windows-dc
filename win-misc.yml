@@ -62,3 +62,6 @@
       type: "A"
       value: "{{ lh_ip }}"
       zone: "windomain.local"
+
+  - name: Flush DNS
+    win_command: ipconfig /flushdns
