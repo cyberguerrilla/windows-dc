@@ -15,9 +15,10 @@
     with_items: "{{ groups['all'] }}"
     when: item != "localhost"
 
-- import_playbook: copy-scripts.yml
+#- import_playbook: copy-scripts.yml
 
-- hosts: all
+- hosts: win
+
   tasks:  
 
   - name: Set timezone to central
