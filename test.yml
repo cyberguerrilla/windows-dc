@@ -1,8 +1,6 @@
 ---
 - hosts: localhost
+  connection: local
   tasks:
-    - script: ./get-win-ip.sh
-      register: win_ip
-
-    - debug:
-        var: win_ip.stdout
+    - debug: var=ansible_all_ipv4_addresses
+    - debug: var=ansible_default_ipv4.address

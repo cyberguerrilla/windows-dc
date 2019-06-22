@@ -1,0 +1,30 @@
+- import_playbook: get-ips.yml
+
+- hosts: win
+  gather_facts: yes
+  
+  tasks:
+  
+  - name: Set logstash dns entry
+    win_dns_record:
+      name: "logstash"
+      type: "A"
+      value: "{{ hostvars['localhost']['ansible_default_ipv4']['address'] }}"
+      zone: "windomain.local"
+
+  - name: Set elasticsearch dns entry
+    win_dns_record:
+      name: "elasticsearch"
+      type: "A"
+      value: "{{ hostvars['localhost']['ansible_default_ipv4']['address'] }}"
+      zone: "windomain.local"
+
+  - name: Set Fleet dns entry
+    win_dns_record:
+      name: "fleet"
+      type: "A"
+      value: "{{ hostvars['localhost']['ansible_default_ipv4']['address'] }}"
+      zone: "windomain.local"
+
+  - name: Flush DNS
+    win_command: ipconfig /flushdns

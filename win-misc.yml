@@ -17,7 +17,7 @@
 
 #- import_playbook: copy-scripts.yml
 
-- hosts: win
+- hosts: all
 
   tasks:  
 
