@@ -1,0 +1,9 @@
+---
+- import_playbook: win-software.yml
+- import_playbook: win-dc.yml
+- import_playbook: win-config.yml
+- import_playbook: win-install-agents.yml
+- import_playbook: win-snmp.yml
+- import_playbook: win-misc.yml
+- hosts: all
+  gather_facts: no

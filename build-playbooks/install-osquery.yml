@@ -1,0 +1,35 @@
+---
+- import_playbook: config-osquery.yml
+
+- hosts: all
+  gather_facts: no
+  tasks:
+
+  - name: Install osquery
+    win_chocolatey:
+      name: osquery
+      params: "/InstallService"
+      state: latest
+
+  - name: Copy osquery cert
+    win_copy:
+      src: ./osquery/cert.crt
+      dest: 'C:\Program Files\osquery\certs\cert.crt'
+      remote_src: no
+
+  - name: Copy osquery flags
+    win_copy:
+      src: ./osquery/osquery.flags
+      dest: 'C:\Program Files\osquery\osquery.flags'
+      remote_src: no
+
+  - name: Copy osquery key
+    win_copy:
+      src: ./osquery/osquery.key
+      dest: 'C:\Program Files\osquery\osquery.key'
+      remote_src: no
+
+  - name: Restart osqueryd
+    win_service:
+      name: osqueryd
+      state: restarted

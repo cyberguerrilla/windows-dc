@@ -6,16 +6,16 @@
   tasks:
 
   - name: Get Fleet enroll-secret and write to file
-    shell: "echo {{item}} > /opt/playbooks/windows-dc/osquery/osquery.key"
+    shell: "echo {{item}} > /opt/playbooks/windows-dc/build-playbooks/osquery/osquery.key"
     with_lines: "sudo docker exec -i fleet /bin/sh -c 'fleetctl login --email guerillaBT@bsides.lab --password bsid3s\\! && fleetctl get enroll-secret' | awk 'NR==2'"
 
   - name: Delete old Fleet cert if exists
     file:
       state: absent
-      path: "/opt/playbooks/windows-dc/osquery/cert.crt"
+      path: "/opt/playbooks/windows-dc/build-playbooks/osquery/cert.crt"
 
   - name: Get Fleet cert and write to file
-    shell: "echo {{item}} >> /opt/playbooks/windows-dc/osquery/cert.crt"
+    shell: "echo {{item}} >> /opt/playbooks/windows-dc/build-playbooks/osquery/cert.crt"
     with_lines: "cat /opt/kolide/fleet/certs/server.cert"
 
 - import_playbook: get-ips.yml
@@ -27,13 +27,13 @@
 
   - name: Copy osquery cert
     win_copy:
-      src: ./osquery/cert.crt
+      src: ./build-playbooks/osquery/cert.crt
       dest: 'C:\Program Files\osquery\certs\cert.crt'
       remote_src: no
 
   - name: Copy osquery key
     win_copy:
-      src: ./osquery/osquery.key
+      src: ./build-playbooks/osquery/osquery.key
       dest: 'C:\Program Files\osquery\osquery.key'
       remote_src: no
 

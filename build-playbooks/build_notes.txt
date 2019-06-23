@@ -1,0 +1,32 @@
+## TO DO ##
+Parse Autoruns wineventlog
+Fix winpcap chocolatey install
+Filebeat c:\pslogs
+
+#Server 2016 download links
+https://software-download.microsoft.com/download/pr/Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO
+
+#Create floppy image for unattended install
+dd if=/dev/zero of=floppy.img bs=512 count=2880
+diskutil eraseVolume MS-DOS MYFLOPPY `hdiutil attach -nomount floppy.img`
+mount -t msdos /dev/disk2 ./mnt/
+cp -r ./windows-dc/floppy-image/* ./mnt/
+umount ./mnt/
+
+pip install pywinrm
+#test ansible winrm connection
+ansible win -i ./windows-dc/win_hosts -m win_ping
+#Run all the playbooks
+ansible-playbook -i ./windows-dc/win_hosts ./windows-dc/win-run-all.yml
+
+#Install software
+ansible-playbook -i ./windows-dc/win_hosts ./windows-dc/win-software.yml
+#Create domain controller
+ansible-playbook -i ./windows-dc/win_hosts ./windows-dc/win-dc.yml
+#Configure windows and domain settings
+ansible-playbook -i ./windows-dc/win_hosts ./windows-dc/win-config.yml
+
+Time
+Create vm to windows installed: 7 minutes
+Ansible playbooks: 16 minutes
+

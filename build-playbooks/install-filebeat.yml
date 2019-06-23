@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Install filebeat
+    win_chocolatey:
+      name: filebeat
+      state: present
+      version: 6.7.1
+  - name: Copy filebeat yml
+    win_copy:
+      src: ./beats/filebeat/filebeat.yml
+      dest: 'c:\ProgramData\chocolatey\lib\filebeat\tools\filebeat.yml'
+      remote_src: no
+  - name: Restart filebeat
+    win_service:
+      name: filebeat
+      state: restarted
