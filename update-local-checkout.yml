@@ -1,0 +1,14 @@
+---
+- name: Update Windows DC local checkout
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  become: yes
+  become_method: sudo
+
+  tasks:
+
+  - name: git pull updates
+    git:
+      repo: https://github.com/cyberguerrilla/windows-dc.git
+      dest: /opt/playbooks
