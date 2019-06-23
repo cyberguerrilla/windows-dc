@@ -1,5 +1,8 @@
+---
+
+#- import_playbook: check-prereqs.yml
+
 - hosts: localhost
-- import_playbook: check-prereqs.yml
   tasks:
 
   - name: Find windows host
