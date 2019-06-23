@@ -18,3 +18,8 @@
   - name: pip install pywinrm
     pip:
       name: pywinrm
+
+  - name: Install nmap
+    package:
+      name: nmap
+      state: latest

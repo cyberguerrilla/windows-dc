@@ -18,7 +18,6 @@
     shell: "echo {{item}} >> /opt/playbooks/windows-dc/build-playbooks/osquery/cert.crt"
     with_lines: "cat /opt/kolide/fleet/certs/server.cert"
 
-- import_playbook: config-pywinrm.yml
 - import_playbook: get-ips.yml
 
 - hosts: win

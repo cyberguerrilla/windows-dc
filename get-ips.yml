@@ -1,25 +1,6 @@
 - hosts: localhost
-  #vars:
-  #  lh_ip: "{{ ansible_default_ipv4.address }}"
+- import_playbook: check-prereqs.yml
   tasks:
-
-#  - name: set localhost IP
-#    set_fact:
-#      lh_ip: "{{ ansible_default_ipv4.address }}"
-#    delegate_to: localhost
-
-#  - name: "Copy fact to other servers"
-#    set_fact:
-#      lh_ip: "{{ lh_ip }}"
-#    delegate_to: "{{ item }}"
-#    delegate_facts: True
-#    with_items: "{{ groups['all'] }}"
-#    when: item != "localhost"
-
-  - name: Install nmap
-    package:
-      name: nmap
-      state: latest
 
   - name: Find windows host
     script: /opt/playbooks/windows-dc/get-win-ip.sh
