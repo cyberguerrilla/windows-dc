@@ -1,3 +1,4 @@
+- import_playbook: config-pywinrm.yml
 - import_playbook: get-ips.yml
 
 - hosts: win

@@ -52,7 +52,14 @@ Write-Host "Downloading SwiftOnSecurity's Sysmon config..."
 
 # Start Sysmon
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Starting Sysmon..."
+# If Process exists update config
+If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
+Start-Process -FilePath "$sysmonDir\Sysmon64.exe" -ArgumentList "-accepteula -c $sysmonConfigPath"
+}
+# If the Sysmon service does not exist install it
+Else {
 Start-Process -FilePath "$sysmonDir\Sysmon64.exe" -ArgumentList "-accepteula -i $sysmonConfigPath"
+}
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Verifying that the Sysmon service is running..."
 Start-Sleep 5 # Give the service time to start
 If ((Get-Service -name Sysmon64).Status -ne "Running")
