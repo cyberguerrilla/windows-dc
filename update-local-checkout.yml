@@ -8,7 +8,6 @@
 
   tasks:
 
-  - name: git pull updates
-    git:
-      repo: https://github.com/cyberguerrilla/windows-dc.git
-      dest: /opt/playbooks
+  - command: git pull
+    args:
+      chdir: /opt/playbooks/windows-dc
