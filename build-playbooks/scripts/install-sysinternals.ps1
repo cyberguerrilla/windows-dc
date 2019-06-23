@@ -1,5 +1,12 @@
 # Purpose: Installs a handful of SysInternals tools on the host into c:\Tools\Sysinternals
 
+Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Checking if sysmon service exist and update config"
+If (Get-Service Sysmon64 -ErrorAction SilentlyContinue) {
+  Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Updating sysmon config from $sysmonConfigPath"
+  Start-Process -FilePath "$sysmonDir\Sysmon64.exe" -ArgumentList "-accepteula -c $sysmonConfigPath"
+  exit
+}
+
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing SysInternals Tooling..."
 $sysinternalsDir = "C:\Tools\Sysinternals"
 $sysmonDir = "C:\ProgramData\Sysmon"
@@ -53,7 +60,7 @@ Write-Host "Downloading SwiftOnSecurity's Sysmon config..."
 # Start Sysmon
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Starting Sysmon..."
 # If Process exists update config
-If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
+If (Get-Service Sysmon64 -ErrorAction SilentlyContinue) {
 Start-Process -FilePath "$sysmonDir\Sysmon64.exe" -ArgumentList "-accepteula -c $sysmonConfigPath"
 }
 # If the Sysmon service does not exist install it

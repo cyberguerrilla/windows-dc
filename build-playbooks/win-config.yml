@@ -22,6 +22,8 @@
 
   - name: Install sysmon
     win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/install-sysinternals.ps1
+    tags:
+    - sysmon
 
   - name: Configure PowerShell Logging
     win_command: powershell.exe -ExecutionPolicy ByPass -File c:/temp/scripts/configure-powershelllogging.ps1
