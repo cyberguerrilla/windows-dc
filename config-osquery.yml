@@ -41,6 +41,12 @@
       dest: 'C:\Program Files\osquery\certs\cert.crt'
       remote_src: no
 
+  - name: Copy osquery flags
+    win_copy:
+      src: ./build-playbooks/osquery/osquery.flags
+      dest: 'C:\Program Files\osquery\osquery.flags'
+      remote_src: no
+
   - name: Copy osquery key
     win_copy:
       src: ./build-playbooks/osquery/osquery.key
