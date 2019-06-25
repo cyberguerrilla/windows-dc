@@ -17,6 +17,7 @@
   - name: Restart Splunk Forwarder
     win_service:
       name: SplunkForwarder
-      state: restarted
+      start_mode: manual
+      state: stopped
       retries: 2
       delay: 10

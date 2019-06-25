@@ -1,5 +1,18 @@
 # Purpose: Installs a handful of SysInternals tools on the host into c:\Tools\Sysinternals
 
+$sysmonDir = "C:\ProgramData\Sysmon"
+$sysinternalsDir = "C:\Tools\Sysinternals"
+$sysmonConfigPath = "$sysmonDir\sysmonConfig.xml"
+$sysmonPath = "C:\Tools\Sysinternals\Sysmon64.exe"
+
+# Download Olaf Hartongs Sysmon config
+# # Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Downloading Olaf Hartong's Sysmon config..."
+# # (New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml', "$sysmonConfigPath")
+# # Alternative: Download SwiftOnSecurity's Sysmon config
+Write-Host "Downloading SwiftOnSecurity's Sysmon config..."
+# (New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml', "$sysmonConfigPath")
+(New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/z-AlphaVersion.xml', "$sysmonConfigPath")
+
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Checking if sysmon service exist and update config"
 If (Get-Service Sysmon64 -ErrorAction SilentlyContinue) {
   Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Updating sysmon config from $sysmonConfigPath"
@@ -8,8 +21,6 @@ If (Get-Service Sysmon64 -ErrorAction SilentlyContinue) {
 }
 
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing SysInternals Tooling..."
-$sysinternalsDir = "C:\Tools\Sysinternals"
-$sysmonDir = "C:\ProgramData\Sysmon"
 If(!(test-path $sysinternalsDir)) {
   New-Item -ItemType Directory -Force -Path $sysinternalsDir
 } Else {
@@ -28,9 +39,7 @@ $autorunsPath = "C:\Tools\Sysinternals\Autoruns64.exe"
 $procmonPath = "C:\Tools\Sysinternals\Procmon.exe"
 $psexecPath = "C:\Tools\Sysinternals\PsExec64.exe"
 $procexpPath = "C:\Tools\Sysinternals\procexp64.exe"
-$sysmonPath = "C:\Tools\Sysinternals\Sysmon64.exe"
 $tcpviewPath = "C:\Tools\Sysinternals\Tcpview.exe"
-$sysmonConfigPath = "$sysmonDir\sysmonConfig.xml"
 
 
 # Microsoft likes TLSv1.2 as well
