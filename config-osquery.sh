@@ -18,6 +18,6 @@ while [[ $(sudo docker exec -i fleet /bin/sh -c 'fleetctl login --email guerilla
   sleep 5
 done
 
-echo "[OSQUERY] Found Kolide container running script to update osquery agent"
+echo "[OSQUERY] Fleet is up and working, configuring osquery on Windows DC.."
 
 ansible-playbook ./config-osquery.yml
