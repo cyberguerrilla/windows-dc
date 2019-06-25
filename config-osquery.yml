@@ -25,6 +25,16 @@
 
   tasks:
 
+  - name: Set Fleet dns entry
+    win_dns_record:
+      name: "fleet"
+      type: "A"
+      value: "{{ hostvars['localhost']['ansible_default_ipv4']['address'] }}"
+      zone: "windomain.local"
+
+  - name: Flush DNS
+    win_command: ipconfig /flushdns
+
   - name: Copy osquery cert
     win_copy:
       src: ./build-playbooks/osquery/cert.crt
